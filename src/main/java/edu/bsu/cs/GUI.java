@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
-    public class NameDropdownGUI extends JFrame {
+
         private JComboBox<String> itemsDropdown;
         private JLabel selectedItemLabel;
 
         private static final String[] items = {"TwinBed", "KingBed", "QueenBed", "Desk","LongDresser", "TallDresser","NightStand"};
 
-        public NameDropdownGUI() {
+        public GUI() {
             super("Name Dropdown GUI");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setSize(300, 200);
@@ -41,4 +41,4 @@ public class GUI extends JFrame {
         }
     }
 
-}
+
