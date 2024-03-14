@@ -1,10 +1,10 @@
 package edu.bsu.cs;
 
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class Error {
- /*   public static void showError(String message) {
+    public static void showError(String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
@@ -13,5 +13,5 @@ public class Error {
     }
 
 //use by calling Error.showError("MESSAGE")
-*/
+
 }

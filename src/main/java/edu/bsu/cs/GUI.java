@@ -12,9 +12,9 @@ public class GUI extends JFrame {
         private static final String[] items = {"TwinBed", "KingBed", "QueenBed", "Desk","LongDresser", "TallDresser","NightStand"};
 
         public GUI() {
-            super("Name Dropdown GUI");
+            super("Item Dropdown GUI");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setSize(300, 200);
+            setSize(1500, 900);
 
             itemsDropdown = new JComboBox<>(items);
             itemsDropdown.addActionListener(new ActionListener() {
