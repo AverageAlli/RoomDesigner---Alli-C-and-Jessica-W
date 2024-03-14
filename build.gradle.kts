@@ -1,8 +1,10 @@
 plugins {
     id("java")
+    id("org.openjfx.javafxplugin") version ("0.0.7")
+    id ("application")
 }
 
-group = "org.example"
+group = "edu.bsu.cs"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -10,19 +12,13 @@ repositories {
 }
 
 dependencies {
-    // Apiguardian API
-    implementation("org.apiguardian:apiguardian-api:1.1.2")
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
 
-    // JUnit 5
-    implementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.junit.platform:junit-platform-commons")
-    testImplementation("org.opentest4j:opentest4j:1.2.0")
+
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
