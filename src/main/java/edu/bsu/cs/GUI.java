@@ -38,10 +38,6 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        RoomMaker roomMaker = new RoomMaker();
-        SwingUtilities.invokeLater(() -> new GUI(roomMaker));
-    }
 }
 
 /*public class GUI extends JFrame {
