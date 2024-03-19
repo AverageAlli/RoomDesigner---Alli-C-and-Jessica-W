@@ -1,16 +1,7 @@
 package edu.bsu.cs;
 
-import javafx.scene.control.Alert;
-
 public class Error {
     public static void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        System.err.println("Error: " + message);
     }
-
-//use by calling Error.showError("MESSAGE")
-
 }

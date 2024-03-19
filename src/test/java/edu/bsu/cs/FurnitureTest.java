@@ -1,8 +1,10 @@
 package edu.bsu.cs;
 
 import org.junit.jupiter.api.Test;
+
 public class FurnitureTest {
-    public static void main(String[] args) {
+    @Test
+    public void testMakeFurniture(){
         Furniture dresser = new Furniture("Dresser",4,1.5);
         Furniture nightstand = new Furniture("Nightstand",2,1);
 

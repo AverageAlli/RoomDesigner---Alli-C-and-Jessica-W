@@ -3,8 +3,6 @@ package edu.bsu.cs;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-
 public class ValidationTest extends Application {
 
     public static void main(String[] args) {
