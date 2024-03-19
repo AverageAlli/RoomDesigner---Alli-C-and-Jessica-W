@@ -34,9 +34,8 @@ public class RoomDesignerController {
             // Assuming you have a method to create room based on dimensions and selected furniture
             roomMaker = new RoomMaker(length, width);
             String selectedFurniture = furnitureComboBox.getValue();
-            Furniture furniture = new Furniture(selectedFurniture, 0, 0); // You may adjust the width and length
-            roomMaker.addFurniture(furniture); // Assuming you have a method to add furniture to the room
-            // Call method to visualize the room
+            Furniture furniture = new Furniture(selectedFurniture, 0, 0); //Adjust width and length
+            roomMaker.addFurniture(furniture);
         } catch (NumberFormatException e) {
             Error.showError("Invalid input. Please enter valid numbers for length and width.");
         }
