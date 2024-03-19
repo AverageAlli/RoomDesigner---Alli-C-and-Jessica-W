@@ -1,8 +1,11 @@
 package edu.bsu.cs;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import javax.swing.*;
 
-public class ValidationTest {
+public class ValidationTest extends Application {
 
     public static void main(String[] args) {
         ValidationTest validationTest = new ValidationTest();
@@ -27,5 +30,10 @@ public class ValidationTest {
         double invalidWidth = 0.0;
         isValid = Validation.isValidRoomDimensions(length, invalidWidth);
         System.out.println("Are dimensions valid? " + isValid);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
     }
 }

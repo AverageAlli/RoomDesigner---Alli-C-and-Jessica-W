@@ -1,11 +1,13 @@
 package edu.bsu.cs;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class RoomDesignerController {
+public class RoomDesignerController extends Application {
     @FXML
     private TextField lengthTextField;
 
@@ -39,5 +41,10 @@ public class RoomDesignerController {
         } catch (NumberFormatException e) {
             Error.showError("Invalid input. Please enter valid numbers for length and width.");
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
     }
 }
