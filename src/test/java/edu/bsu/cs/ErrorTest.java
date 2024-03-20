@@ -1,15 +1,23 @@
 package edu.bsu.cs;
+
 import org.junit.jupiter.api.Test;
-public class ErrorTest{
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class ErrorTest {
     @Test
-    public void testNewError(){
-        Error.showError("Test is working!");
+    public void testShowError() {
+        // Redirect System.err to capture the output
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(outputStreamCaptor));
+
+        // Call the method
+        Error.showError("Test error message");
+
+        // Verify the output
+        assertEquals("Error: Test error message", outputStreamCaptor.toString().trim());
     }
 }
-/*module FinalProject.JessicaAlli.java {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires org.junit.jupiter.api;
-
-    exports edu.bsu.cs;
-}*/
