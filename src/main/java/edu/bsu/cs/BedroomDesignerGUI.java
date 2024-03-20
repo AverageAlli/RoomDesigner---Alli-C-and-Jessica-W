@@ -2,97 +2,82 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class BedroomDesignerGUI extends JFrame {
 
     private JPanel roomPanel;
+    private int roomSize;
 
     public BedroomDesignerGUI(int roomSize) {
-        setTitle("Bedroom Designer");
+        this.roomSize = roomSize;
+        setTitle("Room Designer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 900);
-        setLayout(new BorderLayout());
+        setSize(800, 600);
 
-        // Load the background image based on the room size option
-        ImageIcon backgroundImage = getBackgroundImage(roomSize);
-
-        // Create a panel to display the background image
-        roomPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                roomPanel.setBackground(Color.GREEN);
-                super.paintComponent(g);
-                g.drawImage(backgroundImage.getImage(), 50, 50, getWidth(), getHeight(), this);
-            }
-        };
-
-        add(roomPanel, BorderLayout.CENTER);
-
-        // Create a combo box for furniture selection
-        String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair"};
-        JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
-        furnitureComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle furniture selection
-                String selectedItem = (String) furnitureComboBox.getSelectedItem();
-                if (!selectedItem.equals("Select Furniture")) {
-                    ImageIcon furnitureImage = getFurnitureImage(selectedItem);
-                    // Set up drag-and-drop functionality for the selected furniture image
-                    DragAndDropHandler dragAndDropHandler = new DragAndDropHandler(roomPanel, furnitureImage);
-                }
-            }
-        });
-
-        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        controlPanel.add(furnitureComboBox);
-
-        add(controlPanel, BorderLayout.NORTH);
+        initComponents();
 
         setVisible(true);
     }
 
-    // Method to load background image based on room size option
-    private ImageIcon getBackgroundImage(int roomSize) {
-        String imagePath = getImagePathForRoomSize(roomSize);
-        if (imagePath != null) {
-            return new ImageIcon(imagePath);
-        } else {
-            System.err.println("Invalid room size option. Using default.");
-            return null;
-        }
+    private void initComponents() {
+        roomPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawRoom(g); // Draw the room outline
+            }
+        };
+        roomPanel.setBackground(Color.WHITE);
+        roomPanel.setPreferredSize(new Dimension(400, 400));
+
+        // Add drag and drop functionality to the roomPanel
+        new DragAndDropHandler(roomPanel);
+
+        String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair"};
+        JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
+
+        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        controlPanel.add(furnitureComboBox);
+
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(controlPanel, BorderLayout.NORTH);
+        getContentPane().add(roomPanel, BorderLayout.CENTER);
     }
 
-    // Method to load furniture image based on selection
-    private ImageIcon getFurnitureImage(String furniture) {
-        String imagePath = "src/main/furniture/" + furniture.toLowerCase() + ".png";
-        return new ImageIcon(imagePath);
-    }
+    private void drawRoom(Graphics graphics) {
+        int width = roomPanel.getWidth();
+        int height = roomPanel.getHeight();
 
-    // Method to get the image path based on the room size option
-    private String getImagePathForRoomSize(int roomSize) {
-        String directoryPath = "src/main/roomLayouts/";
+        // Clear the panel before drawing
+        graphics.clearRect(0, 0, width, height);
+
+        // Draw the outline of the room based on the selected room size
+        graphics.setColor(Color.BLACK);
         switch (roomSize) {
-            case 1:
-                return directoryPath + "room9x16.png";
-            case 2:
-                return directoryPath + "room10x8.png";
-            case 3:
-                return directoryPath + "room10x12.png";
-            case 4:
-                return directoryPath + "room10x14.png";
-            case 5:
-                return directoryPath + "room12x8.png";
-            case 6:
-                return directoryPath + "room12x12.png";
+            case 1: // 9x16
+                graphics.drawRect(width / 12, height / 12, width * 4 / 6, height * 4 / 6);
+                break;
+            case 2: // 10x8
+                graphics.drawRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
+                break;
+            case 3: // 10x12
+                graphics.drawRect(width / 8, height / 6, width * 3 / 4, height * 4 / 6);
+                break;
+            case 4: // 10x14
+                graphics.drawRect(width / 8, height / 6, width * 3 / 4, height * 5 / 6);
+                break;
+            case 5: // 12x8
+                graphics.drawRect(width / 12, height / 4, width * 4 / 6, height / 2);
+                break;
+            case 6: // 12x12
+                graphics.drawRect(width / 12, height / 12, width * 4 / 6, height * 4 / 6);
+                break;
             default:
-                return null;
+                break;
         }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new BedroomDesignerGUI(1)); // Default room size option
+        SwingUtilities.invokeLater(() -> new BedroomDesignerGUI(0)); // Placeholder value for room size
     }
 }
