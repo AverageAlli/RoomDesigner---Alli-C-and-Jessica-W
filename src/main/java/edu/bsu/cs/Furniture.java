@@ -1,14 +1,23 @@
 package edu.bsu.cs;
 
+
+
 public class Furniture {
+
+
     private String name;
     private double width;
     private double length;
+
+
 
     public Furniture(String name, double width, double length) {
         this.name = name;
         this.width = width;
         this.length = length;
+
+
+
     }
     //Getters & Setters
     public String getName() {

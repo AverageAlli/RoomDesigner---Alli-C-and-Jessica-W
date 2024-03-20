@@ -1,9 +1,11 @@
 package edu.bsu.cs;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomMaker {
+
+public class RoomMaker  {
     private int length;
     private int width;
     private List<Furniture> furnitureList;
@@ -47,3 +49,7 @@ public class RoomMaker {
         this.furnitureList = furnitureList;
     }
 }
+
+
+
+

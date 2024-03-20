@@ -1,15 +1,25 @@
 package edu.bsu.cs;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoomTest {
     private RoomMaker roomMaker;
     private Furniture chair;
     private Furniture table;
+
+//    @BeforeEach
+//    public void setUp() {
+//        roomMaker = new RoomMaker(10.5, 8.3);
+//        chair = new Furniture("Chair");
+//        table = new Furniture("Table");
+//    }
 
     @Test
     public void testAddFurniture() {
@@ -63,3 +73,4 @@ public class RoomTest {
     }
 
     }
+
