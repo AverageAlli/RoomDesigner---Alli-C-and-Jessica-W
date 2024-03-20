@@ -19,9 +19,12 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass.set("edu.bsu.cs.BedroomDesignerCLI")
+}
+
 javafx {
     version = "17.0.2"
     modules("javafx.controls", "javafx.fxml")
 }
-
-mainClassName = 'edu.bsu.cs.BedroomDesignerCLI'
