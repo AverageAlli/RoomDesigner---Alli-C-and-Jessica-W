@@ -1,5 +1,8 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.BedroomDesignerGUI;
+
+import javax.swing.*;
 import java.util.Scanner;
 
 public class BedroomDesignerCLI {
@@ -44,6 +47,7 @@ public class BedroomDesignerCLI {
         new BedroomDesignerGUI(roomSize);
     }
 }
+
 /*import javax.swing.*;
 import java.util.Scanner;
 

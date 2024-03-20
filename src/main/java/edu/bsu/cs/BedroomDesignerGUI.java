@@ -2,75 +2,75 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 
 public class BedroomDesignerGUI extends JFrame {
 
-    private static final String[] FURNITURE_NAMES = {"Bed", "Nightstand", "Dresser", "Chair"};
-    private static final String[] FURNITURE_IMAGE_NAMES = {"bed.png", "nightstand.png", "dresser.png", "chair.png"};
-    private static final String ROOM_LAYOUTS_DIRECTORY = "/Users/allicarr/IdeaProjects/FinalProject-JessicaAlli/src/main/roomLayouts/";
-
     private JPanel roomPanel;
-    private JComboBox<String> furnitureComboBox;
+    int roomSize;
 
     public BedroomDesignerGUI(int roomSize) {
-        setTitle("Bedroom Designer");
+        setTitle("Room Designer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 900);
-        setLayout(new BorderLayout());
+        setSize(800, 600);
 
-        // Load background image based on room size
-        String roomImagePath = ROOM_LAYOUTS_DIRECTORY + "room" + roomSize + ".png";
-        ImageIcon backgroundImageIcon = new ImageIcon(roomImagePath);
-        JLabel backgroundLabel = new JLabel(backgroundImageIcon);
-        roomPanel = new JPanel(new BorderLayout());
-        roomPanel.add(backgroundLabel);
-
-        // Add furniture combo box
-        furnitureComboBox = new JComboBox<>(FURNITURE_NAMES);
-        furnitureComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedFurniture = (String) furnitureComboBox.getSelectedItem();
-                String furnitureImageName = getFurnitureImageName(selectedFurniture);
-                String furnitureImagePath = ROOM_LAYOUTS_DIRECTORY + furnitureImageName;
-                ImageIcon furnitureImageIcon = new ImageIcon(furnitureImagePath);
-                JLabel furnitureLabel = new JLabel(furnitureImageIcon);
-                furnitureLabel.setSize(furnitureImageIcon.getIconWidth(), furnitureImageIcon.getIconHeight());
-                furnitureLabel.setLocation(0, 0);
-                roomPanel.add(furnitureLabel);
-                roomPanel.revalidate();
-                roomPanel.repaint();
-            }
-        });
-
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        topPanel.add(furnitureComboBox);
-
-        add(topPanel, BorderLayout.NORTH);
-        add(roomPanel, BorderLayout.CENTER);
+        initComponents();
 
         setVisible(true);
     }
+    private void initComponents() {
+        roomPanel = new JPanel();
+        roomPanel.setBackground(Color.WHITE);
+        roomPanel.setPreferredSize(new Dimension(400, 400));
 
-    private String getFurnitureImageName(String furnitureName) {
-        for (int i = 0; i < FURNITURE_NAMES.length; i++) {
-            if (FURNITURE_NAMES[i].equals(furnitureName)) {
-                return FURNITURE_IMAGE_NAMES[i];
-            }
+        // Add drag and drop functionality to the roomPanel
+        new DragAndDropHandler(roomPanel);
+
+        String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair"};
+        JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
+
+        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        controlPanel.add(furnitureComboBox);
+
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(controlPanel, BorderLayout.NORTH);
+        getContentPane().add(roomPanel, BorderLayout.CENTER);
+    }
+
+    private void drawRoom(Graphics graphics) {
+        int width = 500; // Width of the roomPanel
+        int height = 500; // Height of the roomPanel
+
+        // Clear the panel before drawing
+        graphics.clearRect(0, 0, roomPanel.getWidth(), roomPanel.getHeight());
+
+        // Draw the outline of the room based on the selected room size
+        graphics.setColor(Color.BLACK);
+        switch (roomSize) {
+            case 1: // 9x16
+                graphics.drawRect(width / 12, height / 12, width * 4 / 6, height * 4 / 6);
+                break;
+            case 2: // 10x8
+                graphics.drawRect(width / 8, height / 8, width / 1, height / 1);
+                break;
+            case 3: // 10x12
+                graphics.drawRect(width / 8, height / 6, width / 1, height * 4 / 3);
+                break;
+            case 4: // 10x14
+                graphics.drawRect(width / 8, height / 6, width / 1, height * 10 / 6);
+                break;
+            case 5: // 12x8
+                graphics.drawRect(width / 12, height / 4, width * 4 / 6, height / 1);
+                break;
+            case 6: // 12x12
+                graphics.drawRect(width / 12, height / 12, width * 4 / 6, height * 4 / 6);
+                break;
+            default:
+                break;
         }
-        return null;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new BedroomDesignerGUI(1); // Default room size
-            }
-        });
+        SwingUtilities.invokeLater(() -> new BedroomDesignerGUI(0)); // Placeholder value for room size
     }
 }
 /*import javax.swing.*;
