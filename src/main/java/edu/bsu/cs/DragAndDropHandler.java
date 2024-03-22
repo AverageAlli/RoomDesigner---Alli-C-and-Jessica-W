@@ -16,7 +16,7 @@ public class DragAndDropHandler extends DropTargetAdapter implements DragGesture
 
     private JPanel targetPanel; // Panel where the drop operation occurs
 
-    public DragAndDropHandler(JPanel targetPanel, ImageIcon furnitureImage) {
+    public DragAndDropHandler(JPanel targetPanel) {
         this.targetPanel = targetPanel;
         new DropTarget(targetPanel, DnDConstants.ACTION_COPY, this);
         DragSource ds = DragSource.getDefaultDragSource();
