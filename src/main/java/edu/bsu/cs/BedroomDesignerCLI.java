@@ -44,3 +44,4 @@ public class BedroomDesignerCLI {
         new BedroomDesignerGUI(roomSize);
     }
 }
+
