@@ -15,4 +15,4 @@ Gradle DSL: Groovy
 ---------------------------------------------------------------------------------------------------------------
 JDK Version: 17
 ---------------------------------------------------------------------------------------------------------------
-Run the function from the src/java/edu/bsu/cs/BedroomDesignerCLI file.
+Run the main function in the src/java/edu/bsu/cs/BedroomDesignerCLI class file.
