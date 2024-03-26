@@ -32,7 +32,7 @@ public class DragAndDropHandler extends DropTargetAdapter implements DragGesture
                 // Handle the dropped files
                 java.util.List<?> fileList = (java.util.List<?>) data;
                 for (Object file : fileList) {
-                    // Process each dropped file (you can load images or perform other actions)
+                    // Process each dropped file
                     System.out.println("Dropped file: " + file.toString());
                 }
             }
@@ -46,7 +46,7 @@ public class DragAndDropHandler extends DropTargetAdapter implements DragGesture
     @Override
     public void dragGestureRecognized(DragGestureEvent dge) {
         DragSource ds = dge.getDragSource();
-        ImageIcon icon = new ImageIcon("bed.png"); // Default image
+        ImageIcon icon = new ImageIcon("bed.png");
         ImageTransfer transferableImage = new ImageTransfer(icon.getImage());
         ds.startDrag(dge, null, transferableImage, null);
     }
