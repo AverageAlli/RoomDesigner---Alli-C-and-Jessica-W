@@ -2,19 +2,24 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BedroomDesignerGUI extends JFrame {
 
     private JPanel roomPanel;
     private int roomSize;
+    private JLabel furnitureLabel;
+    private Map<String, ImageIcon> furnitureImages;
 
     public BedroomDesignerGUI(int roomSize) {
         this.roomSize = roomSize;
         setTitle("Room Designer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 800);
 
         initComponents();
+        furnitureImages = loadFurnitureImages();
 
         setVisible(true);
     }
@@ -43,7 +48,25 @@ public class BedroomDesignerGUI extends JFrame {
         getContentPane().add(controlPanel, BorderLayout.NORTH);
         getContentPane().add(roomPanel, BorderLayout.CENTER);
     }
+    private Map<String, ImageIcon> loadFurnitureImages() {
+        Map<String, ImageIcon> images = new HashMap<>();
+        // Load images for each furniture type and store in the map
+        images.put("Bed",new ImageIcon("ObjectImages/bed.png"));
+        // Example: images.put("Bed", new ImageIcon("bed.png"));
+        return images;
+    }
+    private void displayFurnitureImage(String furnitureName) {
+        ImageIcon image = furnitureImages.get(furnitureName);
+        if (image != null) {
+            furnitureLabel.setIcon(image);
+            furnitureLabel.setText("");
+        }
+    }
 
+    private void removeFurnitureImage() {
+        furnitureLabel.setIcon(null);
+        furnitureLabel.setText("No furniture selected");
+    }
     private void drawRoom(Graphics graphics) {
         int width = roomPanel.getWidth();
         int height = roomPanel.getHeight();
