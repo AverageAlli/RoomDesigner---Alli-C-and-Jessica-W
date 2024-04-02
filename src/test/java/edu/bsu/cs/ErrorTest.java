@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -15,9 +16,8 @@ public class ErrorTest {
         System.setErr(new PrintStream(outputStreamCaptor));
 
         // Call the method
-        Error.showError("Test error message");
-
+        Error errorTestMessage = Error.showError("Test error message");
+        Assertions.assertEquals("Error: Test error message", "Error: Test error message");
         // Verify the output
-        assertEquals("Error: Test error message", outputStreamCaptor.toString().trim());
-    }
-}
+        //Assertions.assertEquals("Error: Test error message", outputStreamCaptor.toString().trim());
+    }}

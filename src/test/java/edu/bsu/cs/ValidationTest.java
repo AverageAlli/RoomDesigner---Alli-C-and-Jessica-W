@@ -1,37 +1,33 @@
 package edu.bsu.cs;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import org.junit.jupiter.api.Test;
 
-public class ValidationTest extends Application {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        ValidationTest validationTest = new ValidationTest();
-        validationTest.testValidation();
+public class ValidationTest {
+    @Test
+    public void testValidRoomDimensions() {
+        // Test with valid room dimensions
+        assertTrue(Validation.isValidRoomDimensions(10.5, 8.2));
     }
-
-    public void testValidation() {
-        // Test valid room dimensions
-        double validLength = 10.0;
-        double validWidth = 8.0;
-        boolean isValid = Validation.isValidRoomDimensions(validLength, validWidth);
-        System.out.println("Are dimensions valid? " + isValid);
-
-        // Test invalid room dimensions (negative length)
-        double invalidLength = -5.0;
-        double width = 8.0;
-        isValid = Validation.isValidRoomDimensions(invalidLength, width);
-        System.out.println("Are dimensions valid? " + isValid);
-
-        // Test invalid room dimensions (zero width)
-        double length = 10.0;
-        double invalidWidth = 0.0;
-        isValid = Validation.isValidRoomDimensions(length, invalidWidth);
-        System.out.println("Are dimensions valid? " + isValid);
+    @Test
+    public void testInvalidRoomDimensions_NegativeLength() {
+        // Test with negative length
+        assertFalse(Validation.isValidRoomDimensions(-10.5, 8.2));
     }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
+    @Test
+    public void testInvalidRoomDimensions_NegativeWidth() {
+        // Test with negative width
+        assertFalse(Validation.isValidRoomDimensions(10.5, -8.2));
+    }
+    @Test
+    public void testInvalidRoomDimensions_ZeroLength() {
+        // Test with zero length
+        assertFalse(Validation.isValidRoomDimensions(0, 8.2));
+    }
+    @Test
+    public void testInvalidRoomDimensions_ZeroWidth() {
+        // Test with zero width
+        assertFalse(Validation.isValidRoomDimensions(10.5, 0));
     }
 }
