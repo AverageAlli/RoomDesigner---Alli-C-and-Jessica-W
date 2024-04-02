@@ -1,7 +1,8 @@
 package edu.bsu.cs;
 
 public class Error {
-    public static void showError(String message) {
+    public static Error showError(String message) {
         System.err.println("Error: " + message);
+        return null;
     }
 }
