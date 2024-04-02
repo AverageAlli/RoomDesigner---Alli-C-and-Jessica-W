@@ -24,9 +24,11 @@ public class ImageTransfer implements Transferable {
 
     @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-        if (!DataFlavor.imageFlavor.equals(flavor)) {
+//
+        if (flavor.equals(DataFlavor.imageFlavor)) {
+            return image;
+        } else {
             throw new UnsupportedFlavorException(flavor);
         }
-        return image;
     }
 }
