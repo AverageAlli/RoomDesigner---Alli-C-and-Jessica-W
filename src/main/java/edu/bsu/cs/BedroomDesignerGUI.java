@@ -74,6 +74,8 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,6 +116,15 @@ public class BedroomDesignerGUI extends JFrame {
 
         String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair"};
         JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
+        furnitureComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedFurniture = (String) furnitureComboBox.getSelectedItem();
+                if (!selectedFurniture.equals("Select Furniture")) {
+                    displayFurnitureImage(selectedFurniture);
+                }
+            }
+        });
 
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         controlPanel.add(furnitureComboBox);
@@ -129,6 +140,17 @@ public class BedroomDesignerGUI extends JFrame {
         // For example:
         // images.put("Bed", new ImageIcon("ObjectImages/bed.png"));
         return images;
+    }
+
+    private void displayFurnitureImage(String furnitureName) {
+        ImageIcon image = furnitureImages.get(furnitureName);
+        if (image != null) {
+            JLabel furnitureLabel = new JLabel(image);
+            roomPanel.add(furnitureLabel);
+            furnitureLabel.setLocation(100, 100); // Adjust the location as needed
+            furnitureLabel.setSize(image.getIconWidth(), image.getIconHeight());
+            furnitureLabel.repaint(); // Refresh the panel to display the new image
+        }
     }
 
     private void drawRoom(Graphics graphics) {
