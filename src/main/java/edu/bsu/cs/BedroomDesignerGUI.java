@@ -185,7 +185,10 @@ public class BedroomDesignerGUI extends JFrame {
         } else {
             System.out.println("Furniture image not found for: " + furnitureName);
         }
-    }
+
+}
+
+
 
     private void drawRoom(Graphics graphics) {
         int width = roomPanel.getWidth();
