@@ -76,8 +76,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.event.MouseAdapter;
 
 public class BedroomDesignerGUI extends JFrame {
 
@@ -136,20 +138,51 @@ public class BedroomDesignerGUI extends JFrame {
 
     private Map<String, ImageIcon> loadFurnitureImages() {
         Map<String, ImageIcon> images = new HashMap<>();
-        // Load images for each furniture type and store in the map
-        // For example:
-        // images.put("Bed", new ImageIcon("ObjectImages/bed.png"));
+        try {
+            // Load images for each furniture type and store in the map
+            images.put("Bed", new ImageIcon("src/main/ObjectImages/Bed.png"));
+            images.put("Dresser", new ImageIcon("src/main/ObjectImages/dresser.png"));
+            images.put("Nightstand", new ImageIcon("src/main/ObjectImages/nightstand.png"));
+            images.put("Chair", new ImageIcon("src/main/ObjectImages/chair.png"));
+            // Add more furniture types if needed
+        } catch (Exception e) {
+            System.err.println("Error loading furniture images: " + e.getMessage());
+        }
         return images;
     }
 
     private void displayFurnitureImage(String furnitureName) {
-        ImageIcon image = furnitureImages.get(furnitureName);
-        if (image != null) {
-            JLabel furnitureLabel = new JLabel(image);
+        ImageIcon imageIcon = furnitureImages.get(furnitureName);
+        if (imageIcon != null) {
+            // Create a draggable JLabel with the furniture image
+            JLabel furnitureLabel = new JLabel(imageIcon);
+
+            // Set the size of the JLabel to match the image dimensions
+            // This step might not be necessary if the image is already scaled appropriately
+            furnitureLabel.setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
+
+            // Add mouse listener for drag-and-drop functionality
+            furnitureLabel.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    TransferHandler handler = new TransferHandler("icon") {
+                        @Override
+                        public int getSourceActions(JComponent c) {
+                            return TransferHandler.MOVE;
+                        }
+                    };
+                    furnitureLabel.setTransferHandler(handler);
+                    handler.exportAsDrag(furnitureLabel, e, TransferHandler.COPY);
+                }
+            });
+
+            // Add the furnitureLabel to the roomPanel
             roomPanel.add(furnitureLabel);
-            furnitureLabel.setLocation(100, 100); // Adjust the location as needed
-            furnitureLabel.setSize(image.getIconWidth(), image.getIconHeight());
-            furnitureLabel.repaint(); // Refresh the panel to display the new image
+
+            // Ensure the roomPanel is repainted to reflect changes
+            roomPanel.revalidate();
+            roomPanel.repaint();
+        } else {
+            System.out.println("Furniture image not found for: " + furnitureName);
         }
     }
 
