@@ -16,6 +16,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     implementation("org.apiguardian:apiguardian-api:1.1.2")
     implementation(platform("org.junit:junit-bom:5.9.1"))
+    implementation("org.mockito:mockito-core:5.11.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")

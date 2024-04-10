@@ -36,9 +36,9 @@ public class BedroomDesignerCLI {
                 Error.showError("Invalid entry for room dimensions. Values must be greater than 0.");
                 continue;
             }
-
             openBedroomDesignerGUI(Double.parseDouble(lengthInput), Double.parseDouble(widthInput));
         }
+        scanner.close();
     }
 
     private static void openBedroomDesignerGUI(double roomLength, double roomWidth) {

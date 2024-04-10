@@ -19,9 +19,10 @@ public class FurnitureImageLoader {
             furnitureImages.put("Dresser", new ImageIcon("src/main/ObjectImages/dresser.png"));
             furnitureImages.put("Nightstand", new ImageIcon("src/main/ObjectImages/nightstand.png"));
             furnitureImages.put("Chair", new ImageIcon("src/main/ObjectImages/chair.png"));
-            // Add more furniture types if needed
+            // Add more furniture types at a later date, possibly for release v0.3.0
         } catch (Exception e) {
             System.err.println("Error loading furniture images: " + e.getMessage());
+
         }
     }
 
