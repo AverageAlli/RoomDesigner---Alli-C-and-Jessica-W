@@ -2,6 +2,7 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -88,7 +89,32 @@ public class BedroomDesignerGUI extends JFrame {
             System.out.println("Furniture image not found for: " + furnitureName);
         }
     }
+    private void rotateIconClockwise() {
+        Component[] components = roomPanel.getComponents();
+        for (Component component : components) {
+            if (component instanceof JLabel) {
+                Icon icon = ((JLabel) component).getIcon();
+                if (icon != null && icon instanceof ImageIcon) {
+                    ImageIcon imageIcon = (ImageIcon) icon;
+                    Image image = imageIcon.getImage();
+                    Image rotatedImage = rotateImageClockwise(image);
+                    ((ImageIcon) icon).setImage(rotatedImage);
+                    ((JLabel) component).setIcon(icon);
+                }
+            }
+        }
+    }
 
+    private Image rotateImageClockwise(Image img) {
+        int width = img.getWidth(null);
+        int height = img.getHeight(null);
+        BufferedImage bi = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bi.createGraphics();
+        g2d.rotate(Math.PI / 2, height / 2, height / 2);
+        g2d.drawImage(img, 0, 0, null);
+        g2d.dispose();
+        return bi;
+    }
     private void drawRoom(Graphics graphics) {
         int width = roomPanel.getWidth();
         int height = roomPanel.getHeight();
@@ -97,8 +123,8 @@ public class BedroomDesignerGUI extends JFrame {
 
         int startX = width / 12;
         int startY = height / 12;
-        int roomWidthPixels = (int) (width * roomWidth / 12);
-        int roomLengthPixels = (int) (height * roomLength / 12);
+        int roomWidthPixels = (int) (width * roomWidth / 24);
+        int roomLengthPixels = (int) (height * roomLength / 24);
 
         graphics.setColor(Color.BLACK);
         graphics.drawRect(startX, startY, roomWidthPixels, roomLengthPixels);
