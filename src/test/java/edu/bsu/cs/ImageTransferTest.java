@@ -1,4 +1,3 @@
-
 package edu.bsu.cs;
 
 import org.junit.jupiter.api.Test;
@@ -7,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,6 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class ImageTransferTest {
+    private BufferedImage toBufferedImage(Image image) {
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+        return bufferedImage;
+    }
     @Test
     public void testTransferDataFlavors() {
         Image image = new ImageIcon("src/main/ObjectImages/Bed.png").getImage();
@@ -36,12 +43,32 @@ public class ImageTransferTest {
         assertTrue(imageTransfer.isDataFlavorSupported(DataFlavor.imageFlavor));
         }
 
-        @Test
-        public void testGetTransferData() throws UnsupportedFlavorException, IOException {
-        Image image = new ImageIcon("src/main/ObjectImages/Bed.png").getImage();
+    @Test
+    public void testGetTransferData() throws UnsupportedFlavorException, IOException {
+        // Load the image from file
+        Image image = Toolkit.getDefaultToolkit().getImage("src/main/ObjectImages/Bed.png");
+
+        // Create an ImageTransfer instance
         ImageTransfer imageTransfer = new ImageTransfer(image);
 
-        // Verify that getTransferData returns the expected Image
-        assertEquals(image, imageTransfer.getTransferData(DataFlavor.imageFlavor));
+        // Get the transfer data
+        Object transferData = imageTransfer.getTransferData(DataFlavor.imageFlavor);
+
+        // Convert the original image to BufferedImage
+        BufferedImage originalBufferedImage = toBufferedImage(image);
+
+        // Convert the transfer data to BufferedImage
+        BufferedImage transferredBufferedImage = toBufferedImage((Image) transferData);
+
+        // Compare the dimensions of the images
+        assertEquals(originalBufferedImage.getWidth(), transferredBufferedImage.getWidth());
+        assertEquals(originalBufferedImage.getHeight(), transferredBufferedImage.getHeight());
+
+        // Compare the pixels of the images
+        for (int x = 0; x < originalBufferedImage.getWidth(); x++) {
+            for (int y = 0; y < originalBufferedImage.getHeight(); y++) {
+                assertEquals(originalBufferedImage.getRGB(x, y), transferredBufferedImage.getRGB(x, y));
+            }
         }
+    }
         }

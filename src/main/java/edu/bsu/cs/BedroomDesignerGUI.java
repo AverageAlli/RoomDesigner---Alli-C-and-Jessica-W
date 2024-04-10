@@ -2,10 +2,10 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.event.MouseAdapter;
 import java.util.Objects;
 
 public class BedroomDesignerGUI extends JFrame {
@@ -40,8 +40,8 @@ public class BedroomDesignerGUI extends JFrame {
         roomPanel.setBackground(Color.WHITE);
         roomPanel.setPreferredSize(new Dimension(400, 400));
 
-
-        new DragAndDropHandler(roomPanel);
+        // Enable drag and drop in the room panel
+        roomPanel.setTransferHandler(new TransferHandler("icon"));
 
         String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair"};
         JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
@@ -80,7 +80,9 @@ public class BedroomDesignerGUI extends JFrame {
             JLabel furnitureLabel = new JLabel(imageIcon);
             furnitureLabel.setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
 
+            // Add mouse listener for right-click removal
             furnitureLabel.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent e) {
                     if (SwingUtilities.isRightMouseButton(e)) {
                         roomPanel.remove(furnitureLabel);
@@ -99,19 +101,27 @@ public class BedroomDesignerGUI extends JFrame {
                 }
             });
 
+            // Enable drag-and-drop support for the furniture label
+            TransferHandler handler = new TransferHandler("icon") {
+                @Override
+                public int getSourceActions(JComponent c) {
+                    return TransferHandler.MOVE;
+                }
+            };
+            furnitureLabel.setTransferHandler(handler);
+
+            // Add the furniture label to the room panel
             roomPanel.add(furnitureLabel);
             roomPanel.revalidate();
             roomPanel.repaint();
         } else {
             System.out.println("Furniture image not found for: " + furnitureName);
         }
-
     }
 
     private void drawRoom(Graphics graphics) {
         int width = roomPanel.getWidth();
         int height = roomPanel.getHeight();
-
 
         graphics.clearRect(0, 0, width, height);
 
