@@ -2,8 +2,6 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -14,6 +12,7 @@ public class BedroomDesignerGUI extends JFrame {
     private final double roomLength;
     private final double roomWidth;
     private final Map<String, ImageIcon> furnitureImages;
+    private final DragAndDropHandler dragAndDropHandler;
 
     public BedroomDesignerGUI(double roomLength, double roomWidth) {
         this.roomLength = roomLength;
@@ -25,6 +24,7 @@ public class BedroomDesignerGUI extends JFrame {
 
         initComponents();
         furnitureImages = loadFurnitureImages();
+        dragAndDropHandler = new DragAndDropHandler(roomPanel); // Initialize the DragAndDropHandler
 
         setVisible(true);
     }
@@ -39,9 +39,6 @@ public class BedroomDesignerGUI extends JFrame {
         };
         roomPanel.setBackground(Color.WHITE);
         roomPanel.setPreferredSize(new Dimension(400, 400));
-
-        // Enable drag and drop in the room panel
-        roomPanel.setTransferHandler(new TransferHandler("icon"));
 
         String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair"};
         JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
@@ -80,35 +77,8 @@ public class BedroomDesignerGUI extends JFrame {
             JLabel furnitureLabel = new JLabel(imageIcon);
             furnitureLabel.setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
 
-            // Add mouse listener for right-click removal
-            furnitureLabel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    if (SwingUtilities.isRightMouseButton(e)) {
-                        roomPanel.remove(furnitureLabel);
-                        roomPanel.revalidate();
-                        roomPanel.repaint();
-                    } else {
-                        TransferHandler handler = new TransferHandler("icon") {
-                            @Override
-                            public int getSourceActions(JComponent c) {
-                                return TransferHandler.MOVE;
-                            }
-                        };
-                        furnitureLabel.setTransferHandler(handler);
-                        handler.exportAsDrag(furnitureLabel, e, TransferHandler.COPY);
-                    }
-                }
-            });
-
             // Enable drag-and-drop support for the furniture label
-            TransferHandler handler = new TransferHandler("icon") {
-                @Override
-                public int getSourceActions(JComponent c) {
-                    return TransferHandler.MOVE;
-                }
-            };
-            furnitureLabel.setTransferHandler(handler);
+            dragAndDropHandler.makeDraggable(furnitureLabel);
 
             // Add the furniture label to the room panel
             roomPanel.add(furnitureLabel);

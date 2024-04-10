@@ -1,14 +1,19 @@
 package edu.bsu.cs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.dnd.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
+
 
 public class DragAndDropHandler extends TransferHandler {
 
     private JPanel panel;
-    private JLabel draggedLabel;
+    private Component draggedComponent;
 
     public DragAndDropHandler(JPanel panel) {
         this.panel = panel;
@@ -23,27 +28,31 @@ public class DragAndDropHandler extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        draggedLabel = (JLabel) c;
-        return new Transferable() {
-            @Override
-            public DataFlavor[] getTransferDataFlavors() {
-                return new DataFlavor[]{DataFlavor.imageFlavor};
-            }
-
-            @Override
-            public boolean isDataFlavorSupported(DataFlavor flavor) {
-                return flavor.equals(DataFlavor.imageFlavor);
-            }
-
-            @Override
-            public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
-                if (flavor.equals(DataFlavor.imageFlavor)) {
-                    return ((ImageIcon) draggedLabel.getIcon()).getImage();
-                } else {
-                    throw new UnsupportedFlavorException(flavor);
+        if (c instanceof JLabel) {
+            JLabel label = (JLabel) c;
+            draggedComponent = label;
+            return new Transferable() {
+                @Override
+                public DataFlavor[] getTransferDataFlavors() {
+                    return new DataFlavor[]{DataFlavor.imageFlavor};
                 }
-            }
-        };
+
+                @Override
+                public boolean isDataFlavorSupported(DataFlavor flavor) {
+                    return flavor.equals(DataFlavor.imageFlavor);
+                }
+
+                @Override
+                public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
+                    if (flavor.equals(DataFlavor.imageFlavor)) {
+                        return ((ImageIcon) label.getIcon()).getImage();
+                    } else {
+                        throw new UnsupportedFlavorException(flavor);
+                    }
+                }
+            };
+        }
+        return null;
     }
 
     class MyDropTargetListener extends DropTargetAdapter {
@@ -72,32 +81,52 @@ public class DragAndDropHandler extends TransferHandler {
 
         @Override
         public void dragEnter(DropTargetDragEvent dtde) {
-            Component c = dtde.getDropTargetContext().getComponent();
-            if (c instanceof JLabel && c.getParent() == panel) {
-                draggedLabel = (JLabel) c;
-                panel.remove(draggedLabel);
-                panel.revalidate();
-                panel.repaint();
-                dtde.acceptDrag(DnDConstants.ACTION_MOVE);
-            } else {
-                dtde.rejectDrag();
-            }
+            dtde.acceptDrag(DnDConstants.ACTION_MOVE);
         }
 
         @Override
         public void dragOver(DropTargetDragEvent dtde) {
             Point p = dtde.getLocation();
-            draggedLabel.setLocation(p);
-            panel.add(draggedLabel);
-            panel.revalidate();
-            panel.repaint();
+            if (draggedComponent != null) {
+                draggedComponent.setLocation(p);
+                draggedComponent.getParent().repaint();
+            }
         }
 
         @Override
         public void dragExit(DropTargetEvent dte) {
-            panel.add(draggedLabel);
-            panel.revalidate();
-            panel.repaint();
+            if (draggedComponent != null) {
+                draggedComponent.getParent().remove(draggedComponent);
+                draggedComponent.getParent().repaint();
+                draggedComponent = null;
+            }
         }
+    }
+
+    public void makeDraggable(Component component) {
+        component.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                draggedComponent = component;
+                panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                draggedComponent = null;
+                panel.setCursor(Cursor.getDefaultCursor());
+            }
+        });
+
+        component.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (draggedComponent != null) {
+                    Point p = SwingUtilities.convertPoint(component, e.getPoint(), panel);
+                    draggedComponent.setLocation(p);
+                    draggedComponent.getParent().repaint();
+                }
+            }
+        });
     }
 }
