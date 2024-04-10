@@ -12,7 +12,7 @@ public class FurnitureImageLoader {
         loadFurnitureImages();
     }
 
-    private void loadFurnitureImages() {
+    void loadFurnitureImages() {
         // Load images for each furniture type and store in the map
         try {
             furnitureImages.put("Bed", new ImageIcon("src/main/ObjectImages/Bed.png"));
