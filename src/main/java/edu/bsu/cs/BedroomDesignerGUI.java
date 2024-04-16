@@ -2,6 +2,8 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +51,13 @@ public class BedroomDesignerGUI extends JFrame {
                 displayFurnitureImage(selectedFurniture);
             }
         });
+        JButton rotateButton = new JButton("Rotate");
+        rotateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateFurnitureClockwise();
+            }
+        });
 
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         controlPanel.add(furnitureComboBox);
@@ -56,6 +65,21 @@ public class BedroomDesignerGUI extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(controlPanel, BorderLayout.NORTH);
         getContentPane().add(roomPanel, BorderLayout.CENTER);
+    }
+    private void rotateFurnitureClockwise() {
+        Component[] components = roomPanel.getComponents();
+        for (Component component : components) {
+            if (component instanceof JLabel) {
+                Icon icon = ((JLabel) component).getIcon();
+                if (icon != null && icon instanceof ImageIcon) {
+                    ImageIcon imageIcon = (ImageIcon) icon;
+                    Image image = imageIcon.getImage();
+                    Image rotatedImage = rotateImageClockwise(image);
+                    ((ImageIcon) icon).setImage(rotatedImage);
+                    ((JLabel) component).setIcon(icon);
+                }
+            }
+        }
     }
 
     private Map<String, ImageIcon> loadFurnitureImages() {
@@ -80,6 +104,7 @@ public class BedroomDesignerGUI extends JFrame {
 
             // Enable drag-and-drop support for the furniture label
             dragAndDropHandler.makeDraggable(furnitureLabel);
+            furnitureLabel.setToolTipText("Dimensions: " + getFurnitureDimensions(furnitureName));
 
             // Add the furniture label to the room panel
             roomPanel.add(furnitureLabel);
@@ -87,6 +112,20 @@ public class BedroomDesignerGUI extends JFrame {
             roomPanel.repaint();
         } else {
             System.out.println("Furniture image not found for: " + furnitureName);
+        }
+    }
+    private String getFurnitureDimensions(String furnitureName) {
+        switch (furnitureName) {
+            case "Bed":
+                return "Length: 4ft, Width: 5.5ft";
+            case "Dresser":
+                return "Height: 3ft, Width: 1.5ft";
+            case "Nightstand":
+                return "Height: 2ft, Width: 1.5ft";
+            case "Chair":
+                return "Height: 1.5ft, Width: 1.5ft";
+            default:
+                return "";
         }
     }
     private void rotateIconClockwise() {
