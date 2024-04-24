@@ -14,14 +14,16 @@ public class BedroomDesignerCLI extends JFrame {
 
 
     public BedroomDesignerCLI() {
-        // Default constructor
+
     }
 
     public void start() {
-        JFrame frame = new JFrame("Bedroom Designer");
+        JFrame frame = new JFrame("Enter the dimensions of your room: ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
-        frame.getContentPane().setBackground(Color.PINK);
+        frame.setSize(400, 200);
+        frame.getContentPane().setBackground(Color.GRAY);
+
+
 
         frame.setLayout(new GridLayout(4, 2, 10, 10));
 

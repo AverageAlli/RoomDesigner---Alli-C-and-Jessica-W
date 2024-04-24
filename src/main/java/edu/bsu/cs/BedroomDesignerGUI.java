@@ -2,7 +2,6 @@ package edu.bsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
@@ -25,9 +24,9 @@ public class BedroomDesignerGUI extends JFrame {
         this.roomLength = roomLength;
         this.roomWidth = roomWidth;
 
-        setTitle("Room Designer");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 1000);
+        setSize(1500, 1000);
 
         initComponents();
         furnitureImages = loadFurnitureImages();
@@ -56,7 +55,10 @@ public class BedroomDesignerGUI extends JFrame {
         JButton addWindowButton = new JButton("Add Window");
         addWindowButton.addActionListener(e -> addWindowImage());
 
-        String[] furnitureOptions = {"Select Furniture", "Bed", "Dresser", "Nightstand", "Chair", "Desk", "Shelf"};
+        JButton enterNewSizeButton = new JButton("Enter New Room Size"); // New button added
+        enterNewSizeButton.addActionListener(e -> enterNewRoomSize());
+
+        String[] furnitureOptions = {"Select Furniture", "Queen Bed", "Dresser", "Nightstand", "Chair", "Desk", "Shelf"};
         JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
         furnitureComboBox.addActionListener(e -> {
             String selectedFurniture = (String) furnitureComboBox.getSelectedItem();
@@ -64,15 +66,28 @@ public class BedroomDesignerGUI extends JFrame {
                 displayFurnitureImage(selectedFurniture);
             }
         });
-
-        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         controlPanel.add(furnitureComboBox);
         controlPanel.add(clearButton);
         controlPanel.add(addDoorButton);
         controlPanel.add(addWindowButton);
+        controlPanel.add(enterNewSizeButton);
+
+        JLabel titleLabel = new JLabel("Room Designer");
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 20));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel messageLabel = new JLabel("Drag and drop furniture to design your room. To delete a single piece of furniture, right click on it. To see the dimensions of the furniture, hover over the item.");
+        messageLabel.setFont(messageLabel.getFont().deriveFont(Font.PLAIN, 12));
+        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(titleLabel, BorderLayout.NORTH);
+        topPanel.add(messageLabel, BorderLayout.CENTER);
 
         getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(controlPanel, BorderLayout.NORTH);
+        getContentPane().add(topPanel, BorderLayout.NORTH);
+        getContentPane().add(controlPanel, BorderLayout.SOUTH);
         getContentPane().add(roomPanel, BorderLayout.CENTER);
     }
     private void addDoorImage() {
@@ -124,18 +139,22 @@ public class BedroomDesignerGUI extends JFrame {
         Image image = imageIcon.getImage();
         Image rotatedImage = rotateImageClockwise(image, angle);
 
+        int newWidth = rotatedImage.getWidth(null);
+        int newHeight = rotatedImage.getHeight(null);
+        furnitureLabel.setSize(newWidth, newHeight);
+
         furnitureLabel.setIcon(new ImageIcon(rotatedImage));
         adjustFurniturePositionAfterRotation(furnitureLabel, angle);
 
         roomPanel.revalidate();
         roomPanel.repaint();
     }
-    private void adjustFurniturePositionAfterRotation(JLabel furnitureLabel, double angle) {
+    private void adjustFurniturePositionAfterRotation(JLabel furnitureLabel, double ignoredAngle) {
         int labelWidth = furnitureLabel.getWidth();
         int labelHeight = furnitureLabel.getHeight();
 
-        int newX = (int) (furnitureLabel.getX() + (labelWidth - labelHeight) / 2);
-        int newY = (int) (furnitureLabel.getY() + (labelHeight - labelWidth) / 2);
+        int newX = furnitureLabel.getX() + (labelWidth - labelHeight) / 2;
+        int newY = furnitureLabel.getY() + (labelHeight - labelWidth) / 2;
 
         furnitureLabel.setLocation(newX, newY);
     }
@@ -143,7 +162,7 @@ public class BedroomDesignerGUI extends JFrame {
     private Map<String, ImageIcon> loadFurnitureImages() {
         Map<String, ImageIcon> images = new HashMap<>();
         try {
-            images.put("Bed", new ImageIcon("src/main/ObjectImages/Bed.png"));
+            images.put("Queen Bed", new ImageIcon("src/main/ObjectImages/Bed.png"));
             images.put("Dresser", new ImageIcon("src/main/ObjectImages/dresser.png"));
             images.put("Nightstand", new ImageIcon("src/main/ObjectImages/nightstand.png"));
             images.put("Chair", new ImageIcon("src/main/ObjectImages/chair.png"));
@@ -180,7 +199,7 @@ public class BedroomDesignerGUI extends JFrame {
     }
     private String getFurnitureDimensions(String furnitureName) {
         return switch (furnitureName) {
-            case "Bed" -> "Length: 4ft, Width: 5.5ft";
+            case "Queen Bed" -> "Length: 4ft, Width: 5.5ft";
             case "Dresser" -> "Height: 3ft, Width: 1.5ft";
             case "Nightstand" -> "Height: 2ft, Width: 1.5ft";
             case "Chair" -> "Height: 1.5ft, Width: 1.5ft";
@@ -190,36 +209,52 @@ public class BedroomDesignerGUI extends JFrame {
             default -> "";
         };
     }
-    private Image rotateImageClockwise(Image img, double angle) {
+    private Image rotateImageClockwise(Image image, double angle) {
 
-        int width = img.getWidth(null);
-        int height = img.getHeight(null);
+        int width = image.getWidth(null);
+        int height = image.getHeight(null);
 
-        int newWidth = (int) Math.ceil(width * Math.abs(Math.cos(angle)) + height * Math.abs(Math.sin(angle)));
-        int newHeight = (int) Math.ceil(width * Math.abs(Math.sin(angle)) + height * Math.abs(Math.cos(angle)));
+        double sin = Math.abs(Math.sin(angle));
+        double cos = Math.abs(Math.cos(angle));
 
-        BufferedImage bi = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bi.createGraphics();
+        int newWidth = (int) Math.floor(width * cos + height * sin);
+        int newHeight = (int) Math.floor(height * cos + width * sin);
 
+        BufferedImage rotatedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = rotatedImage.createGraphics();
+
+        // Move origin to center of new image
         g2d.translate((newWidth - width) / 2, (newHeight - height) / 2);
-        g2d.rotate(angle, (double) width / 2, (double) height / 2); // Rotate by the specified angle
-        g2d.drawImage(img, 0, 0, null);
+
+        // Rotate the image around its center
+        AffineTransform transform = AffineTransform.getRotateInstance(angle, (double) width / 2, (double) height / 2);
+        g2d.transform(transform);
+
+        // Draw the original image onto the rotated image
+        g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
-        return bi;
+        return rotatedImage;
     }
     private void drawRoom(Graphics graphics) {
-        int width = roomPanel.getWidth();
-        int height = roomPanel.getHeight();
+        int panelWidth = roomPanel.getWidth();
+        int panelHeight = roomPanel.getHeight();
 
-        graphics.clearRect(0, 0, width, height);
+        graphics.clearRect(0, 0, panelWidth, panelHeight);
 
-        int startX = width / 12;
-        int startY = height / 12;
-        int roomWidthPixels = (int) (width * roomWidth / 24);
-        int roomLengthPixels = (int) (height * roomLength / 24);
+        int roomWidthPixels = (int) (panelWidth * roomWidth / 24);
+        int roomLengthPixels = (int) (panelHeight * roomLength / 24);
+
+        int startX = (panelWidth - roomWidthPixels) / 2;
+        int startY = (panelHeight - roomLengthPixels) / 2;
 
         graphics.setColor(Color.BLACK);
         graphics.drawRect(startX, startY, roomWidthPixels, roomLengthPixels);
+    }
+    private void enterNewRoomSize() {
+        System.out.println("Entering new room size...");
+        dispose();
+        BedroomDesignerCLI cli = new BedroomDesignerCLI();
+        cli.start();
     }
 
     public static void main(String[] args) {
