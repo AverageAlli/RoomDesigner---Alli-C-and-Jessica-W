@@ -11,17 +11,11 @@ import java.awt.event.ActionListener;
 
 public class BedroomDesignerCLI extends JFrame {
 
-//    private double roomLength;
-//    private double roomWidth;
+
 
     public BedroomDesignerCLI() {
         // Default constructor
     }
-
-//    public BedroomDesignerCLI(double roomLength, double roomWidth) {
-//        this.roomLength = roomLength;
-//        this.roomWidth = roomWidth;
-//    }
 
     public void start() {
         JFrame frame = new JFrame("Bedroom Designer");
