@@ -58,7 +58,7 @@ public class BedroomDesignerGUI extends JFrame {
         JButton enterNewSizeButton = new JButton("Enter New Room Size"); // New button added
         enterNewSizeButton.addActionListener(e -> enterNewRoomSize());
 
-        String[] furnitureOptions = {"Select Furniture", "Queen Bed", "Dresser", "Nightstand", "Chair", "Desk", "Shelf"};
+        String[] furnitureOptions = {"Select Furniture", "Queen Bed", "Dresser", "Nightstand", "Chair", "Desk", "Shelf", "Twin Bed"};
         JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
         furnitureComboBox.addActionListener(e -> {
             String selectedFurniture = (String) furnitureComboBox.getSelectedItem();
@@ -168,6 +168,7 @@ public class BedroomDesignerGUI extends JFrame {
             images.put("Chair", new ImageIcon("src/main/ObjectImages/chair.png"));
             images.put("Desk", new ImageIcon("src/main/ObjectImages/desk.png"));
             images.put("Shelf", new ImageIcon("src/main/ObjectImages/shelf.png"));
+            images.put("Twin Bed", new ImageIcon("src/main/ObjectImages/twinbed.png"));
         } catch (Exception e) {
             System.err.println("Error loading furniture images: " + e.getMessage());
         }
@@ -205,6 +206,7 @@ public class BedroomDesignerGUI extends JFrame {
             case "Chair" -> "Height: 1.5ft, Width: 1.5ft";
             case "Shelf" -> "Height: , Width: ";
             case "Desk" -> "Height: , Width: ";
+            case "Twin Bed" -> "Height: , Width: ";
 
             default -> "";
         };
