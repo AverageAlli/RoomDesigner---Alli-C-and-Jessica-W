@@ -11,19 +11,23 @@ import java.awt.event.ActionListener;
 
 public class BedroomDesignerCLI extends JFrame {
 
-
+//    private double roomLength;
+//    private double roomWidth;
 
     public BedroomDesignerCLI() {
-
+        // Default constructor
     }
 
+//    public BedroomDesignerCLI(double roomLength, double roomWidth) {
+//        this.roomLength = roomLength;
+//        this.roomWidth = roomWidth;
+//    }
+
     public void start() {
-        JFrame frame = new JFrame("Enter the dimensions of your room: ");
+        JFrame frame = new JFrame("Bedroom Designer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
-        frame.getContentPane().setBackground(Color.GRAY);
-
-
+        frame.setSize(300, 200);
+        frame.getContentPane().setBackground(Color.PINK);
 
         frame.setLayout(new GridLayout(4, 2, 10, 10));
 

@@ -32,7 +32,7 @@ public class ImageTransferTest {
         // Verify that the only supported flavor is DataFlavor.imageFlavor
         assertEquals(1, flavors.length);
         assertTrue(flavors[0].equals(DataFlavor.imageFlavor));
-        }
+    }
 
         @Test
         public void testIsDataFlavorSupported() {
@@ -42,13 +42,35 @@ public class ImageTransferTest {
         // Verify that DataFlavor.imageFlavor is supported
         assertTrue(imageTransfer.isDataFlavorSupported(DataFlavor.imageFlavor));
         }
-
     @Test
-    public void testGetTransferData() throws UnsupportedFlavorException, IOException {
+    public void testTransferDataWidth() throws UnsupportedFlavorException, IOException {
         // Load the image from file
         Image image = Toolkit.getDefaultToolkit().getImage("src/main/ObjectImages/Bed.png");
 
-        // Create an ImageTransfer instance
+        // Create an instance of the ImageTransfer class
+        ImageTransfer imageTransfer = new ImageTransfer(image);
+
+        // Get the transfer data
+        Object transferData = imageTransfer.getTransferData(DataFlavor.imageFlavor);
+
+        // Convert the transfer data to BufferedImage
+        BufferedImage transferredBufferedImage = toBufferedImage((Image) transferData);
+
+        // Load the original image separately
+        Image originalImage = Toolkit.getDefaultToolkit().getImage("src/main/ObjectImages/Bed.png");
+
+        // Convert the original image to BufferedImage
+        BufferedImage originalBufferedImage = toBufferedImage(originalImage);
+
+        // Compare dimensions
+        assertEquals(originalBufferedImage.getWidth(), transferredBufferedImage.getWidth());
+    }
+    @Test
+    public void testGetTransferDataImageHeight() throws UnsupportedFlavorException, IOException {
+        // Load the image from file
+        Image image = Toolkit.getDefaultToolkit().getImage("src/main/ObjectImages/Bed.png");
+
+        // Create an instance of the ImageTransfer class
         ImageTransfer imageTransfer = new ImageTransfer(image);
 
         // Get the transfer data
@@ -60,15 +82,32 @@ public class ImageTransferTest {
         // Convert the transfer data to BufferedImage
         BufferedImage transferredBufferedImage = toBufferedImage((Image) transferData);
 
-        // Compare the dimensions of the images
-        assertEquals(originalBufferedImage.getWidth(), transferredBufferedImage.getWidth());
+        // Compare dimensions
         assertEquals(originalBufferedImage.getHeight(), transferredBufferedImage.getHeight());
+    }
 
-        // Compare the pixels of the images
+    @Test
+    public void testGetTransferDataPixelColor() throws UnsupportedFlavorException, IOException {
+        // Load the image from file
+        Image image = Toolkit.getDefaultToolkit().getImage("src/main/ObjectImages/Bed.png");
+
+        // Create an instance of the ImageTransfer class
+        ImageTransfer imageTransfer = new ImageTransfer(image);
+
+        // Get the transfer data
+        Object transferData = imageTransfer.getTransferData(DataFlavor.imageFlavor);
+
+        // Convert the original image to BufferedImage
+        BufferedImage originalBufferedImage = toBufferedImage(image);
+
+        // Convert the transfer data to BufferedImage
+        BufferedImage transferredBufferedImage = toBufferedImage((Image) transferData);
+
+        // Compare pixel colors
         for (int x = 0; x < originalBufferedImage.getWidth(); x++) {
             for (int y = 0; y < originalBufferedImage.getHeight(); y++) {
                 assertEquals(originalBufferedImage.getRGB(x, y), transferredBufferedImage.getRGB(x, y));
             }
         }
     }
-        }
+}

@@ -20,11 +20,21 @@ public class FurnitureImageLoaderTest {
     @Test
     public void testLoadFurnitureImages() {
         assertNotNull(imageLoader);
-
-        // Check individual furniture images
+    }
+    @Test
+    public void testLoadBedImage(){
         assertNotNull(imageLoader.getFurnitureImage("Bed"));
+    }
+    @Test
+    public void testLoadDresserImage(){
         assertNotNull(imageLoader.getFurnitureImage("Dresser"));
+    }
+    @Test
+    public void testLoadNightstandImage(){
         assertNotNull(imageLoader.getFurnitureImage("Nightstand"));
+    }
+    @Test
+    public void testLoadChairImage(){
         assertNotNull(imageLoader.getFurnitureImage("Chair"));
     }
 }
