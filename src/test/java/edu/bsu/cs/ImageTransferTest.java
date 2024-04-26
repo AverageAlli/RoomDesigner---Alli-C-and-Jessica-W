@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.FurnitureComponents.ImageTransfer;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -7,9 +8,7 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

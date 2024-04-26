@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.GUI.ClearRoom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

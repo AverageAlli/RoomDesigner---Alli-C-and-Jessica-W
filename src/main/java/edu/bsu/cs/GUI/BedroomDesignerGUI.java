@@ -1,4 +1,7 @@
-package edu.bsu.cs;
+package edu.bsu.cs.GUI;
+
+import edu.bsu.cs.FurnitureComponents.DragAndDropHandler;
+import edu.bsu.cs.FurnitureComponents.RotateImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +10,8 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static edu.bsu.cs.FurnitureComponents.FurnitureDimensions.getFurnitureDimensions;
 
 public class BedroomDesignerGUI extends JFrame {
     private Point lastFurniturePosition = new Point(0, 0);
@@ -55,9 +60,8 @@ public class BedroomDesignerGUI extends JFrame {
 
         JButton enterNewSizeButton = new JButton("Enter New Room Size");
         enterNewSizeButton.addActionListener(e -> enterNewRoomSize());
+        FurnitureComboBox furnitureComboBox = new FurnitureComboBox();
 
-        String[] furnitureOptions = {"Select Furniture", "Queen Bed", "Dresser", "Nightstand", "Chair", "Desk", "Shelf"};
-        JComboBox<String> furnitureComboBox = new JComboBox<>(furnitureOptions);
         furnitureComboBox.addActionListener(e -> {
             String selectedFurniture = (String) furnitureComboBox.getSelectedItem();
             if (!Objects.equals(selectedFurniture, "Select Furniture")) {
@@ -191,18 +195,7 @@ public class BedroomDesignerGUI extends JFrame {
         } else {
             System.out.println("Furniture image not found for: " + furnitureName);
         }
-    }
-    private String getFurnitureDimensions(String furnitureName) {
-        return switch (furnitureName) {
-            case "Queen Bed" -> "Length: 4ft, Width: 5.5ft";
-            case "Dresser" -> "Height: 3ft, Width: 1.5ft";
-            case "Nightstand" -> "Height: 2ft, Width: 1.5ft";
-            case "Chair" -> "Height: 1.5ft, Width: 1.5ft";
-            case "Shelf" -> "Height: , Width: ";
-            case "Desk" -> "Height: , Width: ";
-
-            default -> "";
-        };
+        getFurnitureDimensions(furnitureName);
     }
 
     private void drawRoom(Graphics graphics) {

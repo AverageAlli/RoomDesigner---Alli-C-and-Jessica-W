@@ -1,4 +1,6 @@
-package edu.bsu.cs;
+package edu.bsu.cs.FurnitureComponents;
+import edu.bsu.cs.ErrorHandling.Error;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;

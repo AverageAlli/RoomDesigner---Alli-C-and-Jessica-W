@@ -1,10 +1,8 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.FurnitureComponents.FurnitureImageLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.ImageIcon;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 

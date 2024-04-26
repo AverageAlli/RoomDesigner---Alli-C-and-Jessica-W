@@ -1,4 +1,4 @@
-package edu.bsu.cs;
+package edu.bsu.cs.FurnitureComponents;
 
 import javax.swing.*;
 import java.util.HashMap;
