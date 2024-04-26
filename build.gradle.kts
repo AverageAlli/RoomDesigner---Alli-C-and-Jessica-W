@@ -30,7 +30,7 @@ tasks.test {
 }
 
 application {
-    mainClass.set("edu.bsu.cs.BedroomDesignerCLI")
+    mainClass.set("edu.bsu.cs.Controller.BedroomDesignerController")
 }
 
 javafx {
