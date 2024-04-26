@@ -1,6 +1,6 @@
 package edu.bsu.cs;
 
-import edu.bsu.cs.FurnitureComponents.FurnitureImageLoader;
+import edu.bsu.cs.View.FurnitureImageLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

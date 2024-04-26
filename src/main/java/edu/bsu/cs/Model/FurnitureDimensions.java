@@ -1,4 +1,4 @@
-package edu.bsu.cs.FurnitureComponents;
+package edu.bsu.cs.Model;
 
 public class FurnitureDimensions {
     public static String getFurnitureDimensions(String furnitureName) {

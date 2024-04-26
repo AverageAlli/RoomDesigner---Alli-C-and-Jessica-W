@@ -1,6 +1,6 @@
 package edu.bsu.cs;
 
-import edu.bsu.cs.FurnitureComponents.ImageTransfer;
+import edu.bsu.cs.Model.ImageTransfer;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;

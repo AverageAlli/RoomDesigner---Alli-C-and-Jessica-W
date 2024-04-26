@@ -1,6 +1,6 @@
 package edu.bsu.cs;
 
-import edu.bsu.cs.FurnitureComponents.FurnitureDimensions;
+import edu.bsu.cs.Model.FurnitureDimensions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

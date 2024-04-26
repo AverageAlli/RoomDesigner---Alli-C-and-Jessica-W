@@ -1,4 +1,4 @@
-package edu.bsu.cs.FurnitureComponents;
+package edu.bsu.cs.View;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

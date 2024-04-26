@@ -1,7 +1,4 @@
-package edu.bsu.cs.GUI;
-
-import edu.bsu.cs.FurnitureComponents.DragAndDropHandler;
-import edu.bsu.cs.FurnitureComponents.RotateImage;
+package edu.bsu.cs.View;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static edu.bsu.cs.FurnitureComponents.FurnitureDimensions.getFurnitureDimensions;
+import static edu.bsu.cs.Model.FurnitureDimensions.getFurnitureDimensions;
 
 public class BedroomDesignerGUI extends JFrame {
     private Point lastFurniturePosition = new Point(0, 0);

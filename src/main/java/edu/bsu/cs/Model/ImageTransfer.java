@@ -1,4 +1,4 @@
-package edu.bsu.cs.FurnitureComponents;
+package edu.bsu.cs.Model;
 
 import java.awt.*;
 import java.awt.datatransfer.*;

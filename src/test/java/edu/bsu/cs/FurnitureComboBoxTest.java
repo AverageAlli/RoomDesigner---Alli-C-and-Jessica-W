@@ -1,6 +1,6 @@
 package edu.bsu.cs;
 
-import edu.bsu.cs.GUI.FurnitureComboBox;
+import edu.bsu.cs.View.FurnitureComboBox;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;

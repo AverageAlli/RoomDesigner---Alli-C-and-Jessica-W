@@ -1,4 +1,4 @@
-package edu.bsu.cs.GUI;
+package edu.bsu.cs.View;
 
 import javax.swing.*;
 

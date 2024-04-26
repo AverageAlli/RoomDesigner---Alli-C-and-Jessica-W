@@ -1,5 +1,5 @@
 package edu.bsu.cs;
-import edu.bsu.cs.ErrorHandling.Error;
+import edu.bsu.cs.Model.Error;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

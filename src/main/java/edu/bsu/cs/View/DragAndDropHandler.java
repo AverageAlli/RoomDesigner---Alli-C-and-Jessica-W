@@ -1,5 +1,6 @@
-package edu.bsu.cs.FurnitureComponents;
-import edu.bsu.cs.ErrorHandling.Error;
+package edu.bsu.cs.View;
+
+import edu.bsu.cs.Model.Error;
 
 import javax.swing.*;
 import java.awt.*;

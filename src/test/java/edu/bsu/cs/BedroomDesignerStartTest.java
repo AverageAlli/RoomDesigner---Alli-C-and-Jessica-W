@@ -1,6 +1,6 @@
 package edu.bsu.cs;
 
-import edu.bsu.cs.GUI.BedroomDesignerStart;
+import edu.bsu.cs.View.BedroomDesignerStart;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
