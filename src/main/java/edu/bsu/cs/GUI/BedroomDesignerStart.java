@@ -111,7 +111,7 @@ public class BedroomDesignerStart extends JFrame {
         frame.setVisible(true);
     }
 
-    protected void openRoomDesignerGUI(double roomLength, double roomWidth) {
+    public void openRoomDesignerGUI(double roomLength, double roomWidth) {
         System.out.println("Opening Room Designer GUI...");
         BedroomDesignerGUI bedroomDesignerGUI = new BedroomDesignerGUI(roomLength, roomWidth);
         bedroomDesignerGUI.setVisible(true);
