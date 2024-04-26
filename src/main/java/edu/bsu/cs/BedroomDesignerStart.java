@@ -9,20 +9,11 @@ import java.awt.event.ActionListener;
 
 
 
-public class BedroomDesignerCLI extends JFrame {
+public class BedroomDesignerStart extends JFrame {
 
-//    private double roomLength;
-//    private double roomWidth;
-
-    public BedroomDesignerCLI() {
+    public BedroomDesignerStart() {
         // Default constructor
     }
-
-//    public BedroomDesignerCLI(double roomLength, double roomWidth) {
-//        this.roomLength = roomLength;
-//        this.roomWidth = roomWidth;
-//    }
-
     public void start() {
         JFrame frame = new JFrame("Bedroom Designer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,14 +49,9 @@ public class BedroomDesignerCLI extends JFrame {
         frame.setVisible(true);
     }
 
-    private void openRoomDesignerGUI(double roomLength, double roomWidth) {
+    protected void openRoomDesignerGUI(double roomLength, double roomWidth) {
         System.out.println("Opening Room Designer GUI...");
         BedroomDesignerGUI bedroomDesignerGUI = new BedroomDesignerGUI(roomLength, roomWidth);
         bedroomDesignerGUI.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        BedroomDesignerCLI cli = new BedroomDesignerCLI();
-        cli.start();
     }
 }

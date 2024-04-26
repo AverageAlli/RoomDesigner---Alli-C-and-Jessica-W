@@ -37,4 +37,20 @@ public class FurnitureImageLoaderTest {
     public void testLoadChairImage(){
         assertNotNull(imageLoader.getFurnitureImage("Chair"));
     }
+    @Test
+    public void testLoadDeskImage(){
+        assertNotNull(imageLoader.getFurnitureImage("Desk"));
+    }
+    @Test
+    public void testLoadShelfImage(){
+        assertNotNull(imageLoader.getFurnitureImage("Shelf"));
+    }
+    @Test
+    public void testLoadWindowImage(){
+        assertNotNull(imageLoader.getFurnitureImage("Window"));
+    }
+    @Test
+    public void testLoadDoorImage(){
+        assertNotNull(imageLoader.getFurnitureImage("Door"));
+    }
 }
