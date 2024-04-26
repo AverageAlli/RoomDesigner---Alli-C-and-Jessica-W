@@ -34,8 +34,11 @@ public class BedroomDesignerGUI extends JFrame {
 
         setVisible(true);
     }
+    public JPanel getRoomPanel() {
+        return roomPanel;
+    }
 
-    private void initComponents() {
+    public void initComponents() {
         roomPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -170,7 +173,7 @@ public class BedroomDesignerGUI extends JFrame {
         return images;
     }
 
-    private void displayFurnitureImage(String furnitureName) {
+    public void displayFurnitureImage(String furnitureName) {
         ImageIcon imageIcon = furnitureImages.get(furnitureName);
         if (imageIcon != null) {
             JLabel furnitureLabel = new JLabel(imageIcon);

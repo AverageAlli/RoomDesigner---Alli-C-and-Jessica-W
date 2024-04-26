@@ -2,6 +2,9 @@ package edu.bsu.cs.Model;
 
 public class FurnitureDimensions {
     public static String getFurnitureDimensions(String furnitureName) {
+        if (furnitureName == null) {
+            return "Invalid furniture name";
+        }
         return switch (furnitureName) {
             case "Queen Bed" -> "Length: 4ft, Width: 5.5ft";
             case "Dresser" -> "Length: 3ft, Width: 1.5ft";
